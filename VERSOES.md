@@ -166,3 +166,10 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Exportacoes individuais passam a usar o mesmo texto corrigido.
 - Rodape da pagina ajustado para `VERSAO: V3.9`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.9`.
+
+## V3.10 - Preservacao de cores na exportacao
+- Modelos de impressao e exportacao passam a solicitar preservacao exata das cores no navegador.
+- Calendario A4 da equipe ajustado para evitar perda das cores de fundo ao gerar arquivo impresso ou PDF.
+- Exportacao individual com impressao A4 recebe a mesma protecao de cores.
+- Rodape da pagina ajustado para `VERSAO: V3.10`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.10`.

@@ -2000,7 +2000,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.9</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.10</span></span>
   </footer>
 </div>
 
@@ -2011,7 +2011,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.9';
+  const appVersion = 'V3.10';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -3974,7 +3974,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
         <title>Calendário A4 - Equipe</title>
         <style>
           @page{ size: A4 landscape; margin: 8mm; }
-          *{ box-sizing:border-box; }
+          *{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
           body{ margin:0; background:#e8edf5; color:#172033; font-family:Segoe UI, Arial, sans-serif; }
           .print-page{ width:281mm; min-height:194mm; page-break-after:always; background:#fff; padding:8mm; display:flex; flex-direction:column; gap:4mm; }
           .print-page:last-child{ page-break-after:auto; }
@@ -4115,7 +4115,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
         <title>Calendário A4 Visual - Equipe</title>
         <style>
           @page{ size:A4 landscape; margin:7mm; }
-          *{ box-sizing:border-box; }
+          *{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
           body{ margin:0; background:#e9edf5; color:#172033; font-family:Segoe UI, Arial, sans-serif; }
           .visual-page{ width:283mm; min-height:196mm; page-break-after:always; background:#f8fafc; padding:7mm; display:flex; flex-direction:column; gap:3.2mm; }
           .visual-page:last-child{ page-break-after:auto; }
@@ -4465,7 +4465,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
         <title>Planejamento Individual A4</title>
         <style>
           @page{ size:A4 landscape; margin:8mm; }
-          *{ box-sizing:border-box; }
+          *{ box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
           body{ margin:0; background:#e8edf5; color:#172033; font-family:Segoe UI, Arial, sans-serif; }
           .print-page{ width:281mm; min-height:194mm; background:#f8fafc; padding:8mm; display:flex; flex-direction:column; gap:4mm; }
           .print-head{ display:flex; justify-content:space-between; gap:8mm; align-items:flex-start; padding:6mm 7mm; background:#28216c; color:#fff; }

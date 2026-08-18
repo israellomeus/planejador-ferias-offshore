@@ -277,6 +277,18 @@
         "Rodape da pagina ajustado para VERSAO: V3.9.",
         "Arquivos exportados passam a exibir I.LOMEUS - V3.9."
       ]
+    },
+    {
+      "versao": "V3.10",
+      "titulo": "Preservacao de cores na exportacao",
+      "fase": "Fase 3",
+      "mudancas": [
+        "Modelos de impressao e exportacao passam a solicitar preservacao exata das cores no navegador.",
+        "Calendario A4 da equipe ajustado para evitar perda das cores de fundo ao gerar arquivo impresso ou PDF.",
+        "Exportacao individual com impressao A4 recebe a mesma protecao de cores.",
+        "Rodape da pagina ajustado para VERSAO: V3.10.",
+        "Arquivos exportados passam a exibir I.LOMEUS - V3.10."
+      ]
     }
   ]
 }
