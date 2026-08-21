@@ -173,3 +173,24 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Exportacao individual com impressao A4 recebe a mesma protecao de cores.
 - Rodape da pagina ajustado para `VERSAO: V3.10`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.10`.
+
+## V3.11 - Ordem mobile do planejamento da equipe
+- No celular, botoes de recarregar exemplo, limpar colaboradores e formulario de adicionar colaborador passam a aparecer antes da lista de colaboradores.
+- Lista de colaboradores fica em seguida, mantendo o fluxo de cadastro e revisao mais natural em telas pequenas.
+- Painel de alertas de cruzamento fica apos a lista no layout mobile.
+- Layout desktop preservado com lista e painel lateral.
+- Rodape da pagina ajustado para `VERSAO: V3.11`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.11`.
+
+## V3.12 - Ajuste do resumo individual em PNG
+- Texto do embarque no resumo individual em PNG passa a ficar alinhado ao fim da linha do tempo.
+- Indicacao de `+2d vendidos` passa para uma segunda linha, evitando sobreposicao com a data de embarque.
+- Arquivo exportado individual fica mais legivel quando o trecho vendido e pequeno.
+- Rodape da pagina ajustado para `VERSAO: V3.12`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.12`.
+
+## V3.13 - Ajuste interno da linha do tempo individual
+- Linha do tempo do resumo individual em PNG foi reposicionada para manter os textos dentro do card.
+- Data de embarque e indicacao de `+2d vendidos` permanecem em linhas separadas sem sair da caixa.
+- Rodape da pagina ajustado para `VERSAO: V3.13`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.13`.

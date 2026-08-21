@@ -796,7 +796,13 @@
     align-items:start;
     min-width: 0;
   }
-  @media (max-width: 1060px){ .team-layout{ grid-template-columns: 1fr; } }
+  @media (max-width: 1060px){
+    .team-layout{ grid-template-columns: 1fr; }
+    .team-layout > aside{ display: contents; }
+    .team-control-panel{ order: 1; }
+    .team-members-panel{ order: 2; }
+    .team-conflict-panel{ order: 3; }
+  }
   .team-layout > *{ min-width: 0; }
   aside .sim-grid{
     grid-template-columns: 1fr;
@@ -1882,7 +1888,7 @@
     </div>
 
     <div class="team-layout">
-      <div class="panel">
+      <div class="panel team-members-panel">
         <div class="calendar-toolbar">
           <div>
             <h3>Colaboradores da análise</h3>
@@ -1893,7 +1899,7 @@
       </div>
 
       <aside>
-        <div class="panel">
+        <div class="panel team-control-panel">
           <div class="panel-clear-action">
             <button class="ghost-btn reset-demo-btn" id="reset-team-demo" type="button">RECARREGAR EXEMPLO</button>
             <button class="ghost-btn clear-team-btn" id="clear-team-members" type="button">LIMPAR COLABORADORES</button>
@@ -1941,7 +1947,7 @@
           </ul>
         </div>
 
-        <div class="panel">
+        <div class="panel team-conflict-panel">
           <h3>Alerta de cruzamento de férias</h3>
           <div id="team-conflicts" class="conflicts"></div>
         </div>
@@ -2000,7 +2006,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.10</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.13</span></span>
   </footer>
 </div>
 
@@ -2011,7 +2017,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.10';
+  const appVersion = 'V3.13';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -4771,7 +4777,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     });
 
     const timelineX = 650;
-    const timelineY = 738;
+    const timelineY = 720;
     const timelineW = 628;
     const timelineH = 42;
     const segments = [
@@ -4795,7 +4801,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     ctx.restore();
     ctx.fillStyle = print.dim;
     ctx.font = monoFont(700, 13);
-    ctx.fillText(`${fmtDate(plan.desembarque)} - desembarque`, timelineX, timelineY + 72);
+    ctx.fillText(`${fmtDate(plan.desembarque)} - desembarque`, timelineX, timelineY + 70);
     const embarkMarkerX = timelineX + timelineW * (totalReal / total);
     ctx.strokeStyle = print.embark;
     ctx.lineWidth = 3;
@@ -4803,12 +4809,11 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     ctx.moveTo(embarkMarkerX, timelineY - 8);
     ctx.lineTo(embarkMarkerX, timelineY + timelineH + 8);
     ctx.stroke();
-    ctx.textAlign = 'center';
-    ctx.fillStyle = print.embark;
-    ctx.fillText(`${fmtDate(plan.embarque)} - embarque`, embarkMarkerX, timelineY + 72);
     ctx.textAlign = 'right';
+    ctx.fillStyle = print.embark;
+    ctx.fillText(`${fmtDate(plan.embarque)} - embarque`, timelineX + timelineW, timelineY + 70);
     ctx.fillStyle = print.dim;
-    ctx.fillText('+2d vendidos', timelineX + timelineW, timelineY + 72);
+    ctx.fillText('+2d vendidos', timelineX + timelineW, timelineY + 88);
     ctx.textAlign = 'left';
 
     const legendY = 670;
