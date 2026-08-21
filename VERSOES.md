@@ -194,3 +194,11 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Data de embarque e indicacao de `+2d vendidos` permanecem em linhas separadas sem sair da caixa.
 - Rodape da pagina ajustado para `VERSAO: V3.13`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.13`.
+
+## V3.14 - Paleta simplificada do calendario individual
+- Calendario individual passa a usar apenas tres grupos de cor: folga, ferias e embarcado.
+- Datas especiais como desembarque, embarque, folga antes, folga apos e dia vendido continuam indicadas pelo texto dentro de cada caixa de data.
+- Legendas do calendario individual foram reduzidas para evitar excesso de cores e duplicacao de informacoes.
+- Exportacoes individuais em PNG e impressao A4 passam a usar a mesma paleta simplificada.
+- Rodape da pagina ajustado para `VERSAO: V3.14`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.14`.

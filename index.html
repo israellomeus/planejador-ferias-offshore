@@ -744,14 +744,14 @@
   }
   .legend-item{ display:flex; align-items:center; gap: 8px; font-size: calc(12px * var(--font-scale)); color: var(--text-dim); }
   .swatch{ width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; border:1px solid rgba(255,255,255,.12); }
-  .swatch.folga1{ background:#2C5570; }
+  .swatch.folga1{ background:#D9E8F6; border-color:#9CB6D1; }
   .swatch.ferias{ background: var(--amber); }
-  .swatch.folga2{ background: var(--cyan); }
-  .swatch.sold{ background: var(--sold); }
-  .swatch.cycleoff{ background:#D6E4F2; border-color:#8FAECC; }
+  .swatch.folga2{ background:#D9E8F6; border-color:#9CB6D1; }
+  .swatch.sold{ background:#D9F2D8; border-color:#8CCF8A; }
+  .swatch.cycleoff{ background:#D9E8F6; border-color:#9CB6D1; }
   .swatch.onboard{ background:#D9F2D8; border-color:#8CCF8A; }
-  .swatch.embark-light{ background:#F2DDF4; border-color:#D4A8DC; }
-  .swatch.disembark-light{ background:#E6DCFA; border-color:#BFB0EA; }
+  .swatch.embark-light{ background:#D9F2D8; border-color:#8CCF8A; }
+  .swatch.disembark-light{ background:#D9E8F6; border-color:#9CB6D1; }
   .swatch.work{ background: var(--state-work); }
   .swatch.off{ background: var(--state-off); }
   .swatch.vacation{ background: var(--state-vacation); }
@@ -941,12 +941,14 @@
     font-weight: 700;
     white-space: normal;
   }
-  .sim-tag.rest-before{ background:#2C5570; color: var(--text); }
+  .sim-tag.rest-before,
+  .sim-tag.rest-after,
+  .sim-tag.cycle-off,
+  .sim-tag.disembark{ background:#D9E8F6; color:#1E3A57; }
   .sim-tag.vacation{ background: var(--amber); color:#291c08; }
-  .sim-tag.rest-after{ background: var(--cyan); color:#06201d; }
-  .sim-tag.sold{ background: var(--sold); color:#fff; }
-  .sim-tag.embark{ background:#F2DDF4; color:#66306E; }
-  .sim-tag.disembark{ background:#E6DCFA; color:#442D85; }
+  .sim-tag.sold,
+  .sim-tag.embark,
+  .sim-tag.onboard{ background:#D9F2D8; color:#1F5C2F; }
   .outlook-calendar{
     background: var(--bg);
     padding: 18px;
@@ -1032,13 +1034,13 @@
     border-radius:2px;
     background: var(--line);
   }
-  .outlook-marker.disembark{ background:#E6DCFA; }
-  .outlook-marker.rest-before{ background:#2C5570; }
+  .outlook-marker.disembark{ background:#D9E8F6; }
+  .outlook-marker.rest-before{ background:#D9E8F6; }
   .outlook-marker.vacation{ background: var(--amber); }
-  .outlook-marker.rest-after{ background: var(--cyan); }
-  .outlook-marker.sold{ background: var(--sold); }
-  .outlook-marker.embark{ background:#F2DDF4; }
-  .outlook-marker.cycle-off{ background:#D6E4F2; }
+  .outlook-marker.rest-after{ background:#D9E8F6; }
+  .outlook-marker.sold{ background:#D9F2D8; }
+  .outlook-marker.embark{ background:#D9F2D8; }
+  .outlook-marker.cycle-off{ background:#D9E8F6; }
   .outlook-phase{
     display:block;
     color: var(--text-faint);
@@ -1053,71 +1055,44 @@
     display:block;
     line-height:1.15;
   }
-  .outlook-day.rest-before{
-    background:#2C5570;
-    border-color:#3b6d8d;
+  .outlook-day.rest-before,
+  .outlook-day.rest-after,
+  .outlook-day.cycle-off,
+  .outlook-day.disembark{
+    background:#D9E8F6;
+    border-color:#9CB6D1;
   }
   .outlook-day.vacation{
     background: var(--amber);
     border-color: color-mix(in srgb, var(--amber) 78%, #000);
   }
-  .outlook-day.rest-after{
-    background: var(--cyan);
-    border-color: color-mix(in srgb, var(--cyan) 72%, #000);
-  }
-  .outlook-day.sold{
-    background: var(--sold);
-    border-color: color-mix(in srgb, var(--sold) 74%, #000);
-  }
-  .outlook-day.embark{
-    background:#F2DDF4;
-    border-color:#D4A8DC;
-  }
+  .outlook-day.sold,
+  .outlook-day.embark,
   .outlook-day.onboard{
     background:#D9F2D8;
     border-color:#8CCF8A;
   }
-  .outlook-day.cycle-off{
-    background:#D6E4F2;
-    border-color:#8FAECC;
-  }
-  .outlook-day.disembark{
-    background:#E6DCFA;
-    border-color:#BFB0EA;
-  }
   .outlook-day.rest-before .outlook-number,
   .outlook-day.rest-before .outlook-phase,
-  .outlook-day.sold .outlook-number,
-  .outlook-day.sold .outlook-phase,
-  .outlook-day.embark .outlook-number,
-  .outlook-day.embark .outlook-phase{
-    color:#66306E;
-  }
-  .outlook-day.disembark .outlook-number,
-  .outlook-day.disembark .outlook-phase{
-    color:#442D85;
-  }
-  .outlook-day.rest-before .outlook-number,
-  .outlook-day.rest-before .outlook-phase,
-  .outlook-day.sold .outlook-number,
-  .outlook-day.sold .outlook-phase{
-    color:#fff;
-  }
-  .outlook-day.vacation .outlook-number,
-  .outlook-day.vacation .outlook-phase,
   .outlook-day.rest-after .outlook-number,
-  .outlook-day.rest-after .outlook-phase{
-    color:#24170A;
-  }
-  .outlook-day.onboard .outlook-number{
-    color:#1F5C2F;
-  }
-  .outlook-day.onboard .outlook-phase{
-    color:#2D6B3B;
-  }
+  .outlook-day.rest-after .outlook-phase,
+  .outlook-day.disembark .outlook-number,
+  .outlook-day.disembark .outlook-phase,
   .outlook-day.cycle-off .outlook-number,
   .outlook-day.cycle-off .outlook-phase{
     color:#1E3A57;
+  }
+  .outlook-day.vacation .outlook-number,
+  .outlook-day.vacation .outlook-phase{
+    color:#24170A;
+  }
+  .outlook-day.sold .outlook-number,
+  .outlook-day.sold .outlook-phase,
+  .outlook-day.embark .outlook-number,
+  .outlook-day.embark .outlook-phase,
+  .outlook-day.onboard .outlook-number,
+  .outlook-day.onboard .outlook-phase{
+    color:#1F5C2F;
   }
   .phase-embark,
   .phase-sold{
@@ -1785,13 +1760,8 @@
   <p class="status individual-page" id="status"></p>
 
   <div class="legend individual-page">
-    <div class="legend-item"><span class="swatch folga1"></span>Folga usada antes das férias</div>
+    <div class="legend-item"><span class="swatch folga1"></span>Folga</div>
     <div class="legend-item"><span class="swatch ferias"></span>Férias (30 dias)</div>
-    <div class="legend-item"><span class="swatch folga2"></span>Folga restante após férias</div>
-    <div class="legend-item"><span class="swatch sold"></span>2 dias vendidos (retorno)</div>
-    <div class="legend-item"><span class="swatch cycleoff"></span>Folga normal</div>
-    <div class="legend-item"><span class="swatch disembark-light"></span>Desembarque</div>
-    <div class="legend-item"><span class="swatch embark-light"></span>Embarque</div>
     <div class="legend-item"><span class="swatch onboard"></span>Embarcado</div>
   </div>
 
@@ -1964,12 +1934,9 @@
     </div>
 
     <div class="legend">
-      <div class="legend-item"><span class="swatch folga1"></span>Folga antes das férias</div>
+      <div class="legend-item"><span class="swatch folga1"></span>Folga</div>
       <div class="legend-item"><span class="swatch ferias"></span>Férias</div>
-      <div class="legend-item"><span class="swatch folga2"></span>Folga após férias</div>
-      <div class="legend-item"><span class="swatch sold"></span>Dias vendidos (retorno)</div>
-      <div class="legend-item"><span class="swatch embark"></span>Embarque</div>
-      <div class="legend-item"><span class="swatch disembark"></span>Desembarque</div>
+      <div class="legend-item"><span class="swatch onboard"></span>Embarcado</div>
     </div>
 
     <div class="panel">
@@ -2006,7 +1973,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.13</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.14</span></span>
   </footer>
 </div>
 
@@ -2017,7 +1984,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.13';
+  const appVersion = 'V3.14';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -4237,14 +4204,14 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
       text: '#172033',
       dim: '#64748B',
       header: '#28216C',
-      restBefore: '#2C5570',
+      restBefore: '#D9E8F6',
       vacation: '#F0A62F',
-      restAfter: '#45C2B4',
-      sold: '#6F63D9',
-      embark: '#F2DDF4',
-      disembark: '#E6DCFA',
+      restAfter: '#D9E8F6',
+      sold: '#D9F2D8',
+      embark: '#D9F2D8',
+      disembark: '#D9E8F6',
       onboard: '#D9F2D8',
-      cycleOff: '#D6E4F2',
+      cycleOff: '#D9E8F6',
       blank: '#FFFFFF',
       muted: '#F7F9FC'
     };
@@ -4253,14 +4220,14 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
   function individualPhaseStyle(cls){
     const colors = individualExportColors();
     const styles = {
-      'rest-before': {bg: colors.restBefore, fg: '#FFFFFF', border: '#244961'},
+      'rest-before': {bg: colors.restBefore, fg: '#1E3A57', border: '#9CB6D1'},
       vacation: {bg: colors.vacation, fg: '#24170A', border: '#D48E1C'},
-      'rest-after': {bg: colors.restAfter, fg: '#06201D', border: '#249B8E'},
-      sold: {bg: colors.sold, fg: '#FFFFFF', border: '#5A4DC0'},
-      embark: {bg: colors.embark, fg: '#66306E', border: '#D4A8DC'},
-      disembark: {bg: colors.disembark, fg: '#442D85', border: '#BFB0EA'},
+      'rest-after': {bg: colors.restAfter, fg: '#1E3A57', border: '#9CB6D1'},
+      sold: {bg: colors.sold, fg: '#1F5C2F', border: '#8CCF8A'},
+      embark: {bg: colors.embark, fg: '#1F5C2F', border: '#8CCF8A'},
+      disembark: {bg: colors.disembark, fg: '#1E3A57', border: '#9CB6D1'},
       onboard: {bg: colors.onboard, fg: '#1F5C2F', border: '#8CCF8A'},
-      'cycle-off': {bg: colors.cycleOff, fg: '#1E3A57', border: '#8FAECC'}
+      'cycle-off': {bg: colors.cycleOff, fg: '#1E3A57', border: '#9CB6D1'}
     };
     return styles[cls] || {bg: colors.blank, fg: colors.text, border: colors.line};
   }
@@ -4400,13 +4367,8 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
 
     const footerY = height - 38;
     const legend = [
-      ['FOLGA ANTES', individualPhaseStyle('rest-before').bg],
-      ['FÉRIAS', individualPhaseStyle('vacation').bg],
-      ['FOLGA APÓS', individualPhaseStyle('rest-after').bg],
-      ['DIA VENDIDO', individualPhaseStyle('sold').bg],
       ['FOLGA', individualPhaseStyle('cycle-off').bg],
-      ['DESEMBARQUE', individualPhaseStyle('disembark').bg],
-      ['EMBARQUE', individualPhaseStyle('embark').bg],
+      ['FÉRIAS', individualPhaseStyle('vacation').bg],
       ['EMBARCADO', individualPhaseStyle('onboard').bg]
     ];
     let legendX = margin;
@@ -4484,14 +4446,11 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
           .summary strong{ display:block; margin-top:1mm; color:#172033; font-size:8.8pt; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
           .legend-row{ display:flex; flex-wrap:wrap; gap:5mm; color:#475569; font:800 7.8pt Consolas, monospace; }
           .dot{ display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:4px; vertical-align:middle; border:1px solid #d9e1eb; }
-          .dot.rest-before,.pday.rest-before{ background:#2c5570; color:#fff; border-color:#244961; }
+          .dot.rest-before,.dot.rest-after,.dot.cycle-off,.dot.disembark,
+          .pday.rest-before,.pday.rest-after,.pday.cycle-off,.pday.disembark{ background:#d9e8f6; color:#1e3a57; border-color:#9cb6d1; }
           .dot.vacation,.pday.vacation{ background:#f0a62f; color:#24170a; border-color:#d48e1c; }
-          .dot.rest-after,.pday.rest-after{ background:#45c2b4; color:#06201d; border-color:#249b8e; }
-          .dot.sold,.pday.sold{ background:#6f63d9; color:#fff; border-color:#5a4dc0; }
-          .dot.onboard,.pday.onboard{ background:#d9f2d8; color:#1f5c2f; border-color:#8ccf8a; }
-          .dot.cycle-off,.pday.cycle-off{ background:#d6e4f2; color:#1e3a57; border-color:#8faecc; }
-          .dot.embark,.pday.embark{ background:#f2ddf4; color:#66306e; border-color:#d4a8dc; }
-          .dot.disembark,.pday.disembark{ background:#e6dcfa; color:#442d85; border-color:#bfb0ea; }
+          .dot.sold,.dot.embark,.dot.onboard,
+          .pday.sold,.pday.embark,.pday.onboard{ background:#d9f2d8; color:#1f5c2f; border-color:#8ccf8a; }
           .months{ display:grid; grid-template-columns:repeat(2,1fr); gap:4mm; }
           .print-individual-month{ background:#fff; border:1px solid #cbd5e1; border-radius:3mm; padding:3mm; break-inside:avoid; page-break-inside:avoid; }
           .print-individual-month h2{ margin:0 0 2.5mm; color:#172033; font-size:11.5pt; }
@@ -4524,13 +4483,8 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
             <div><small>Embarque</small><strong>${fmtDate(plan.embarque)}</strong></div>
           </section>
           <div class="legend-row">
-            <span><b class="dot rest-before"></b>FOLGA ANTES</span>
-            <span><b class="dot vacation"></b>FÉRIAS</span>
-            <span><b class="dot rest-after"></b>FOLGA APÓS</span>
-            <span><b class="dot sold"></b>DIA VENDIDO</span>
             <span><b class="dot cycle-off"></b>FOLGA</span>
-            <span><b class="dot disembark"></b>DESEMBARQUE</span>
-            <span><b class="dot embark"></b>EMBARQUE</span>
+            <span><b class="dot vacation"></b>FÉRIAS</span>
             <span><b class="dot onboard"></b>EMBARCADO</span>
           </div>
           <section class="months">${monthsHTML}</section>
