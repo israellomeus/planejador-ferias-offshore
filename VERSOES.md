@@ -224,3 +224,11 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Barra de ciclo individual passa a ocultar rotulos quando o segmento nao tem largura suficiente.
 - Rodape da pagina ajustado para `VERSAO: V3.17`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.17`.
+
+## V3.18 - Funcao personalizada
+- Campo de funcao do modulo coletivo passa a ter a opcao `Outros`.
+- Ao selecionar `Outros`, o cadastro abre um campo manual para digitar a funcao.
+- Cards de colaboradores tambem permitem editar funcoes personalizadas.
+- Importacao de dados passa a aceitar funcoes personalizadas.
+- Rodape da pagina ajustado para `VERSAO: V3.18`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.18`.

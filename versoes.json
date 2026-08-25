@@ -375,6 +375,19 @@
         "Rodape da pagina ajustado para VERSAO: V3.17.",
         "Arquivos exportados passam a exibir I.LOMEUS - V3.17."
       ]
+    },
+    {
+      "versao": "V3.18",
+      "titulo": "Funcao personalizada",
+      "fase": "Fase 3",
+      "mudancas": [
+        "Campo de funcao do modulo coletivo passa a ter a opcao Outros.",
+        "Ao selecionar Outros, o cadastro abre um campo manual para digitar a funcao.",
+        "Cards de colaboradores tambem permitem editar funcoes personalizadas.",
+        "Importacao de dados passa a aceitar funcoes personalizadas.",
+        "Rodape da pagina ajustado para VERSAO: V3.18.",
+        "Arquivos exportados passam a exibir I.LOMEUS - V3.18."
+      ]
     }
   ]
 }

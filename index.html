@@ -1255,6 +1255,13 @@
     padding: 7px 8px;
     min-height: 32px;
   }
+  .role-custom-input{
+    display:none;
+    margin-top: 7px;
+  }
+  .role-field.custom-role-active .role-custom-input{
+    display:block;
+  }
 
   .candidate-list{
     display:flex;
@@ -1970,7 +1977,7 @@
               <label for="newTeamName">Nome</label>
               <input type="text" id="newTeamName" placeholder="Nome">
             </div>
-            <div class="field">
+            <div class="field role-field" id="newTeamRoleField">
               <label for="newTeamRole">Função</label>
               <select id="newTeamRole">
                 <option value="Operador de Survey Trainee">Operador de Survey Trainee</option>
@@ -1980,9 +1987,12 @@
                 <option value="Operador de ROV Trainee">Operador de ROV Trainee</option>
                 <option value="Operador de ROV">Operador de ROV</option>
                 <option value="Supervisor de ROV">Supervisor de ROV</option>
+                <option value="Superintendente de ROV">Superintendente de ROV</option>
+                <option value="__custom_role__">Outros</option>
               </select>
-          </div>
-          <div class="field">
+              <input class="role-custom-input" type="text" id="newTeamRoleCustom" placeholder="Digite a função" hidden>
+            </div>
+            <div class="field">
               <label for="newTeamDisembark" class="has-help">Desembarque ref. <span class="info-tip" tabindex="0" aria-label="Informe a data de desembarque atual como referência para projetar os ciclos 14x14." data-tip="Informe a data de desembarque atual como referência para projetar os ciclos 14x14.">i</span></label>
               <input type="date" id="newTeamDisembark">
             </div>
@@ -2063,7 +2073,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.17</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.18</span></span>
   </footer>
 </div>
 
@@ -2074,7 +2084,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.17';
+  const appVersion = 'V3.18';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -2086,6 +2096,8 @@
     'Supervisor de ROV',
     'Superintendente de ROV'
   ];
+  const customRoleValue = '__custom_role__';
+  const customRoleLabel = 'Outros';
   let teamMembers = [];
   let individualSelectedCycle = 0;
   let draggedTeamMemberId = '';
@@ -2736,10 +2748,43 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
   }
 
   function buildRoleOptions(selectedRole){
-    const roles = teamRoles.includes(selectedRole) || !selectedRole
-      ? teamRoles
-      : [selectedRole, ...teamRoles];
-    return roles.map(role => `<option value="${escapeHTML(role)}" ${role === selectedRole ? 'selected' : ''}>${escapeHTML(role)}</option>`).join('');
+    const selectedValue = isCustomRole(selectedRole) ? customRoleValue : selectedRole;
+    const defaultOptions = teamRoles
+      .map(role => `<option value="${escapeHTML(role)}" ${role === selectedValue ? 'selected' : ''}>${escapeHTML(role)}</option>`)
+      .join('');
+    return defaultOptions + `<option value="${customRoleValue}" ${selectedValue === customRoleValue ? 'selected' : ''}>${customRoleLabel}</option>`;
+  }
+
+  function isCustomRole(role){
+    return !!role && !teamRoles.includes(role);
+  }
+
+  function customRoleInputValue(role){
+    return isCustomRole(role) && role !== customRoleLabel ? role : '';
+  }
+
+  function resolveTeamRole(presetValue, customValue){
+    if(presetValue === customRoleValue){
+      return String(customValue || '').trim().slice(0, 90) || customRoleLabel;
+    }
+    return String(presetValue || '').trim() || 'Equipe';
+  }
+
+  function newTeamRoleValue(){
+    return resolveTeamRole(
+      document.getElementById('newTeamRole')?.value || '',
+      document.getElementById('newTeamRoleCustom')?.value || ''
+    );
+  }
+
+  function updateNewTeamRoleCustomVisibility(){
+    const field = document.getElementById('newTeamRoleField');
+    const select = document.getElementById('newTeamRole');
+    const input = document.getElementById('newTeamRoleCustom');
+    if(!field || !select || !input) return;
+    const isCustom = select.value === customRoleValue;
+    field.classList.toggle('custom-role-active', isCustom);
+    input.hidden = !isCustom;
   }
 
   function createDefaultTeamMembers(baseDate){
@@ -3021,6 +3066,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     }
     list.innerHTML = analysis.rows.map(row => {
       const member = row.member;
+      const customRoleActive = isCustomRole(member.role || '');
       const deadline = teamDeadlineInfo(row.plan, member.deadline);
       const cardAlerts = teamMemberCardAlerts(analysis, row);
       const cycleSelector = row.candidates.length > 1
@@ -3054,9 +3100,10 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
               <label>Nome</label>
               <input type="text" data-member-field="name" value="${escapeHTML(member.name || '')}">
             </div>
-            <div class="field">
+            <div class="field role-field ${customRoleActive ? 'custom-role-active' : ''}">
               <label>Função</label>
-              <select data-member-field="role">${buildRoleOptions(member.role || '')}</select>
+              <select data-member-field="rolePreset">${buildRoleOptions(member.role || '')}</select>
+              <input class="role-custom-input" type="text" data-member-field="roleCustom" value="${escapeHTML(customRoleInputValue(member.role || ''))}" placeholder="Digite a função">
             </div>
             <div class="field">
               <label class="has-help">Desembarque ref. ${helpTip('Informe a data de desembarque atual como referência para projetar os ciclos 14x14.')}</label>
@@ -3414,12 +3461,12 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     return value.map((member, index) => {
       if(!member || typeof member !== 'object') throw new Error('Colaborador inválido');
       const name = String(member.name || '').trim().slice(0, 90);
-      const role = String(member.role || '').trim();
+      const role = String(member.role || '').trim().slice(0, 90);
       const desembarque = String(member.desembarque || '').trim();
       const interestMonth = String(member.interestMonth || '').trim();
       const deadline = String(member.deadline || '').trim();
       if(!name) throw new Error('Colaborador sem nome');
-      if(!teamRoles.includes(role)) throw new Error('Função inválida');
+      if(!role) throw new Error('Função inválida');
       if(!isValidDateString(desembarque)) throw new Error('Data de desembarque inválida');
       if(!isValidMonthString(interestMonth)) throw new Error('Mês de interesse inválido');
       if(deadline && !isValidDateString(deadline)) throw new Error('Vencimento inválido');
@@ -4971,6 +5018,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
   document.getElementById('dataInicioFeriasManual').addEventListener('input', renderFromInputs);
   document.getElementById('font-size-mode').addEventListener('change', () => applyVisualSettings());
   document.getElementById('palette-mode').addEventListener('change', () => applyVisualSettings());
+  document.getElementById('newTeamRole').addEventListener('change', updateNewTeamRoleCustomVisibility);
   document.querySelectorAll('.app-tab').forEach(button => {
     button.addEventListener('click', () => setActivePage(button.dataset.page));
   });
@@ -5004,7 +5052,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
   });
   document.getElementById('add-team-member').addEventListener('click', () => {
     const name = document.getElementById('newTeamName').value.trim();
-    const role = document.getElementById('newTeamRole').value.trim();
+    const role = newTeamRoleValue();
     const desembarque = document.getElementById('newTeamDisembark').value;
     const interestMonth = document.getElementById('newTeamInterestMonth').value;
     const deadline = document.getElementById('newTeamDeadline').value;
@@ -5021,6 +5069,8 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     });
     document.getElementById('newTeamName').value = '';
     document.getElementById('newTeamRole').value = teamRoles[0];
+    document.getElementById('newTeamRoleCustom').value = '';
+    updateNewTeamRoleCustomVisibility();
     document.getElementById('newTeamDeadline').value = '';
     document.getElementById('newTeamHelicopter').checked = false;
     renderTeamPlanner();
@@ -5050,6 +5100,11 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     if(!member || !field) return;
     if(field === 'helicopter'){
       member.helicopter = e.target.checked;
+    } else if(field === 'rolePreset'){
+      const customInput = card.querySelector('[data-member-field="roleCustom"]');
+      member.role = resolveTeamRole(e.target.value, customInput?.value || '');
+    } else if(field === 'roleCustom'){
+      member.role = resolveTeamRole(customRoleValue, e.target.value);
     } else {
       member[field] = e.target.value;
     }
@@ -5196,6 +5251,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
   loadVisualSettings();
   loadActivePage();
   loadVesselName();
+  updateNewTeamRoleCustomVisibility();
   document.getElementById('desembarque').value = isoDate(today);
   document.getElementById('mesAlvo').value = isoMonth(new Date(today.getFullYear(), today.getMonth()+1, 1));
   const initialTeamYear = today.getFullYear() + 1;
