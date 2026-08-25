@@ -1165,6 +1165,18 @@
     border-radius: 10px;
     padding: 12px;
     min-width: 0;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, .10);
+    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, opacity .16s ease;
+  }
+  .employee-card.dragging{
+    opacity: .58;
+    transform: scale(.985);
+    cursor: grabbing;
+  }
+  .employee-card.drag-over{
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    box-shadow: 0 18px 34px rgba(15, 23, 42, .18);
   }
   .employee-top{
     display:flex;
@@ -1172,6 +1184,34 @@
     justify-content:space-between;
     gap: 10px;
     margin-bottom: 10px;
+  }
+  .employee-actions{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .drag-handle{
+    border:1px solid var(--line-soft);
+    background: color-mix(in srgb, var(--bg-panel) 82%, #fff);
+    color: var(--text-dim);
+    border-radius: 7px;
+    padding: 7px 10px;
+    min-height: 32px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .drag-handle:active{
+    cursor: grabbing;
+  }
+  .drag-handle:focus-visible{
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
   }
   .employee-title{
     font-weight: 600;
@@ -1971,7 +2011,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.15</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.16</span></span>
   </footer>
 </div>
 
@@ -1982,7 +2022,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.15';
+  const appVersion = 'V3.16';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -1996,6 +2036,8 @@
   ];
   let teamMembers = [];
   let individualSelectedCycle = 0;
+  let draggedTeamMemberId = '';
+  let pointerTeamDrag = null;
   const fontModes = {
     xxs: {scale:.72, canvasScale:.72, tight:true},
     xs: {scale:.82, canvasScale:.82, tight:true},
@@ -2946,7 +2988,10 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
             <div>
               <div class="employee-title">${escapeHTML(member.name || 'Sem nome')}</div>
             </div>
-            <button class="danger-btn" type="button" data-remove-member="${escapeHTML(member.id)}">REMOVER</button>
+            <div class="employee-actions">
+              <button class="drag-handle" type="button" draggable="true" data-drag-member="${escapeHTML(member.id)}" title="Arrastar para reordenar" aria-label="Arrastar ${escapeHTML(member.name || 'colaborador')} para reordenar">MOVER</button>
+              <button class="danger-btn" type="button" data-remove-member="${escapeHTML(member.id)}">REMOVER</button>
+            </div>
           </div>
           <div class="mini-grid">
             <div class="field">
@@ -3083,6 +3128,46 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
     renderTeamMembers(analysis);
     renderTeamConflicts(analysis);
     saveTeamMembers();
+  }
+
+  function moveTeamMemberTo(dragId, targetId, afterTarget=false){
+    if(!dragId || !targetId || dragId === targetId) return false;
+    const fromIndex = teamMembers.findIndex(member => member.id === dragId);
+    const targetIndex = teamMembers.findIndex(member => member.id === targetId);
+    if(fromIndex < 0 || targetIndex < 0) return false;
+    const [member] = teamMembers.splice(fromIndex, 1);
+    const adjustedTarget = teamMembers.findIndex(item => item.id === targetId);
+    teamMembers.splice(adjustedTarget + (afterTarget ? 1 : 0), 0, member);
+    return true;
+  }
+
+  function moveTeamMemberToEnd(dragId){
+    const fromIndex = teamMembers.findIndex(member => member.id === dragId);
+    if(fromIndex < 0 || fromIndex === teamMembers.length - 1) return false;
+    const [member] = teamMembers.splice(fromIndex, 1);
+    teamMembers.push(member);
+    return true;
+  }
+
+  function clearTeamDragState(){
+    draggedTeamMemberId = '';
+    pointerTeamDrag = null;
+    document.querySelectorAll('.employee-card.dragging, .employee-card.drag-over').forEach(item => {
+      item.classList.remove('dragging', 'drag-over');
+    });
+  }
+
+  function highlightTeamDropTarget(clientX, clientY){
+    if(!draggedTeamMemberId) return null;
+    const target = document.elementFromPoint(clientX, clientY)?.closest('.employee-card') || null;
+    document.querySelectorAll('.employee-card.drag-over').forEach(item => {
+      if(item !== target) item.classList.remove('drag-over');
+    });
+    if(target && target.dataset.memberId !== draggedTeamMemberId){
+      target.classList.add('drag-over');
+      return target;
+    }
+    return null;
   }
 
   function selectedFontMode(){
@@ -4931,6 +5016,103 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
         member.selected = Number(selectButton.getAttribute('data-index')) || 0;
         renderTeamPlanner();
       }
+    }
+  });
+  document.getElementById('team-member-list').addEventListener('pointerdown', (e) => {
+    const handle = e.target.closest('[data-drag-member]');
+    const card = handle?.closest('.employee-card');
+    if(!handle || !card) return;
+    e.preventDefault();
+    draggedTeamMemberId = card.dataset.memberId || '';
+    pointerTeamDrag = {
+      id: draggedTeamMemberId,
+      startX: e.clientX,
+      startY: e.clientY,
+      lastX: e.clientX,
+      lastY: e.clientY,
+      active: false
+    };
+    card.classList.add('dragging');
+  });
+  document.getElementById('team-member-list').addEventListener('dragstart', (e) => {
+    const handle = e.target.closest('[data-drag-member]');
+    const card = e.target.closest('.employee-card');
+    if(!handle || !card){
+      e.preventDefault();
+      return;
+    }
+    draggedTeamMemberId = card.dataset.memberId || '';
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', draggedTeamMemberId);
+    requestAnimationFrame(() => card.classList.add('dragging'));
+  });
+  document.getElementById('team-member-list').addEventListener('dragover', (e) => {
+    if(!draggedTeamMemberId) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    highlightTeamDropTarget(e.clientX, e.clientY);
+  });
+  document.getElementById('team-member-list').addEventListener('dragleave', (e) => {
+    const card = e.target.closest('.employee-card');
+    if(card && !card.contains(e.relatedTarget)){
+      card.classList.remove('drag-over');
+    }
+  });
+  document.getElementById('team-member-list').addEventListener('drop', (e) => {
+    if(!draggedTeamMemberId) return;
+    e.preventDefault();
+    const card = e.target.closest('.employee-card');
+    const dragId = e.dataTransfer.getData('text/plain') || draggedTeamMemberId;
+    let moved = false;
+    if(card){
+      const rect = card.getBoundingClientRect();
+      const afterTarget = e.clientY > rect.top + rect.height / 2;
+      moved = moveTeamMemberTo(dragId, card.dataset.memberId, afterTarget);
+    } else {
+      moved = moveTeamMemberToEnd(dragId);
+    }
+    draggedTeamMemberId = '';
+    clearTeamDragState();
+    if(moved){
+      renderTeamPlanner();
+      transferStatus('Ordem dos colaboradores atualizada');
+    }
+  });
+  document.getElementById('team-member-list').addEventListener('dragend', () => {
+    clearTeamDragState();
+  });
+  document.addEventListener('pointermove', (e) => {
+    if(!pointerTeamDrag) return;
+    pointerTeamDrag.lastX = e.clientX;
+    pointerTeamDrag.lastY = e.clientY;
+    if(!pointerTeamDrag.active){
+      const movedX = Math.abs(e.clientX - pointerTeamDrag.startX);
+      const movedY = Math.abs(e.clientY - pointerTeamDrag.startY);
+      pointerTeamDrag.active = movedX + movedY > 6;
+    }
+    if(pointerTeamDrag.active){
+      e.preventDefault();
+      highlightTeamDropTarget(e.clientX, e.clientY);
+    }
+  });
+  document.addEventListener('pointerup', (e) => {
+    if(!pointerTeamDrag) return;
+    const drag = pointerTeamDrag;
+    const list = document.getElementById('team-member-list');
+    const target = highlightTeamDropTarget(e.clientX, e.clientY);
+    const dropElement = document.elementFromPoint(e.clientX, e.clientY);
+    let moved = false;
+    if(drag.active && target){
+      const rect = target.getBoundingClientRect();
+      const afterTarget = e.clientY > rect.top + rect.height / 2;
+      moved = moveTeamMemberTo(drag.id, target.dataset.memberId, afterTarget);
+    } else if(drag.active && list?.contains(dropElement)){
+      moved = moveTeamMemberToEnd(drag.id);
+    }
+    clearTeamDragState();
+    if(moved){
+      renderTeamPlanner();
+      transferStatus('Ordem dos colaboradores atualizada');
     }
   });
 

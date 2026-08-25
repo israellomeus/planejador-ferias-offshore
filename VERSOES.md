@@ -209,3 +209,11 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Exportacoes da equipe em PNG e impressao A4 passam a usar a mesma legenda reduzida.
 - Rodape da pagina ajustado para `VERSAO: V3.15`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.15`.
+
+## V3.16 - Reordenacao dos colaboradores
+- Cards dos colaboradores no modulo coletivo passam a ter alca de movimento para reorganizar a equipe por arrastar e soltar.
+- Nova ordem dos colaboradores e salva junto aos dados da equipe.
+- Tabela do calendario coletivo passa a ser atualizada automaticamente com a mesma ordem dos cards.
+- Cards receberam efeito flutuante durante a movimentacao para deixar a reorganizacao mais clara.
+- Rodape da pagina ajustado para `VERSAO: V3.16`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.16`.
