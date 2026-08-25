@@ -217,3 +217,10 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Cards receberam efeito flutuante durante a movimentacao para deixar a reorganizacao mais clara.
 - Rodape da pagina ajustado para `VERSAO: V3.16`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.16`.
+
+## V3.17 - Responsividade geral
+- Calendario individual em telas pequenas passa a ter rolagem horizontal interna para preservar a leitura dos textos nas datas.
+- Textos das caixas de data receberam quebra mais flexivel para evitar cortes em mobile.
+- Barra de ciclo individual passa a ocultar rotulos quando o segmento nao tem largura suficiente.
+- Rodape da pagina ajustado para `VERSAO: V3.17`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.17`.

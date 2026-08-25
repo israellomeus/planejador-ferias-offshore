@@ -363,6 +363,18 @@
         "Rodape da pagina ajustado para VERSAO: V3.16.",
         "Arquivos exportados passam a exibir I.LOMEUS - V3.16."
       ]
+    },
+    {
+      "versao": "V3.17",
+      "titulo": "Responsividade geral",
+      "fase": "Fase 3",
+      "mudancas": [
+        "Calendario individual em telas pequenas passa a ter rolagem horizontal interna para preservar a leitura dos textos nas datas.",
+        "Textos das caixas de data receberam quebra mais flexivel para evitar cortes em mobile.",
+        "Barra de ciclo individual passa a ocultar rotulos quando o segmento nao tem largura suficiente.",
+        "Rodape da pagina ajustado para VERSAO: V3.17.",
+        "Arquivos exportados passam a exibir I.LOMEUS - V3.17."
+      ]
     }
   ]
 }

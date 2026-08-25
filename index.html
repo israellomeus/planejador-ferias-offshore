@@ -629,11 +629,12 @@
   .timeline-title span.total{ color: var(--cyan); }
   .bar{
     position: relative;
-    height: 40px;
+    height: 46px;
     display: flex;
     border-radius: 4px;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid var(--line-soft);
+    background: var(--bg-panel);
   }
   .seg{
     height: 100%;
@@ -646,6 +647,13 @@
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: clip;
+  }
+  .seg:first-child{
+    border-radius: 3px 0 0 3px;
+  }
+  .seg:last-child{
+    border-radius: 0 3px 3px 0;
   }
   .seg.folga1{ background: #315F7B; color: #FFFFFF; }
   .seg.ferias{ background: var(--amber); color: #2B1B05; }
@@ -665,14 +673,17 @@
   }
   .embarque-marker .flag{
     position: absolute;
-    top: -20px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%) rotate(-90deg);
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: 8px;
     letter-spacing: 0.05em;
     color: var(--text);
     white-space: nowrap;
+    background: rgba(255,255,255,.84);
+    border-radius: 3px;
+    padding: 1px 3px;
   }
   .ticks{
     display:flex;
@@ -974,6 +985,9 @@
     margin: 0 0 16px;
     text-transform: lowercase;
   }
+  .outlook-month{
+    min-width: 0;
+  }
   .outlook-weekdays,
   .outlook-month-grid{
     display:grid;
@@ -1050,10 +1064,12 @@
     min-height: 16px;
     white-space:normal;
     overflow:hidden;
+    overflow-wrap: anywhere;
   }
   .phase-line{
     display:block;
     line-height:1.15;
+    overflow-wrap: anywhere;
   }
   .outlook-day.rest-before,
   .outlook-day.rest-after,
@@ -1687,6 +1703,42 @@
       gap: 10px;
       padding: 12px;
     }
+    .bar{
+      height: 44px;
+    }
+    .seg{
+      font-size: 9px;
+      padding: 0 2px;
+    }
+    .outlook-calendar{
+      padding: 12px;
+    }
+    .outlook-range{
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .outlook-month{
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .outlook-weekdays,
+    .outlook-month-grid{
+      min-width: 620px;
+    }
+    .outlook-month-grid{
+      gap: 6px;
+    }
+    .outlook-day{
+      min-height: 68px;
+      padding: 7px 5px;
+    }
+    .outlook-phase{
+      font-size: 7px;
+      overflow: visible;
+    }
     .creator-credit{
       position: static;
       display:block;
@@ -2011,7 +2063,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.16</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.17</span></span>
   </footer>
 </div>
 
@@ -2022,7 +2074,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.16';
+  const appVersion = 'V3.17';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -2280,7 +2332,11 @@
     ];
     const barHTML = segments
       .filter(s => s.days > 0)
-      .map(s => `<div class="seg ${s.cls}" style="width:${(s.days/totalDireito*100)}%" title="${s.label}">${s.days>=3 ? s.label : ''}</div>`)
+      .map(s => {
+        const widthPct = s.days / totalDireito * 100;
+        const visibleLabel = widthPct >= 16 ? s.label : '';
+        return `<div class="seg ${s.cls}" style="width:${widthPct}%" title="${s.label}">${visibleLabel}</div>`;
+      })
       .join('') +
       `<div class="embarque-marker" style="left:${(totalReal/totalDireito*100)}%"><span class="flag">embarque</span></div>`;
 
