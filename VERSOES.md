@@ -202,3 +202,10 @@ Controle editável das versões do Planejador de Férias. Atualizar este arquivo
 - Exportacoes individuais em PNG e impressao A4 passam a usar a mesma paleta simplificada.
 - Rodape da pagina ajustado para `VERSAO: V3.14`.
 - Arquivos exportados passam a exibir `I.LOMEUS - V3.14`.
+
+## V3.15 - Paleta simplificada no modulo coletivo
+- Modulo de ferias coletivas passa a usar a mesma leitura de cores do modulo individual: folga, ferias e embarcado.
+- Embarque e desembarque deixam de ter cores exclusivas na legenda coletiva e permanecem identificados pelo texto dentro das celulas.
+- Exportacoes da equipe em PNG e impressao A4 passam a usar a mesma legenda reduzida.
+- Rodape da pagina ajustado para `VERSAO: V3.15`.
+- Arquivos exportados passam a exibir `I.LOMEUS - V3.15`.

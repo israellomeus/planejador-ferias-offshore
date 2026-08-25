@@ -752,11 +752,11 @@
   .swatch.onboard{ background:#D9F2D8; border-color:#8CCF8A; }
   .swatch.embark-light{ background:#D9F2D8; border-color:#8CCF8A; }
   .swatch.disembark-light{ background:#D9E8F6; border-color:#9CB6D1; }
-  .swatch.work{ background: var(--state-work); }
-  .swatch.off{ background: var(--state-off); }
+  .swatch.work{ background:#D9F2D8; border-color:#8CCF8A; }
+  .swatch.off{ background:#D9E8F6; border-color:#9CB6D1; }
   .swatch.vacation{ background: var(--state-vacation); }
-  .swatch.embark{ background: var(--state-embark); }
-  .swatch.disembark{ background: var(--state-disembark); }
+  .swatch.embark{ background:#D9F2D8; border-color:#8CCF8A; }
+  .swatch.disembark{ background:#D9E8F6; border-color:#9CB6D1; }
 
   .individual-export-panel{
     background: var(--bg-panel);
@@ -1488,19 +1488,19 @@
   }
   .team-calendar-grid.annual .team-cell.weekend{ background: var(--grid-weekend-bg); }
   .team-cell.weekend{ background: var(--grid-weekend-bg); }
-  .team-cell.work{ background: color-mix(in srgb, var(--state-work) 84%, white); color: #ffffff; }
-  .team-cell.off{ background: var(--state-off); color: #263A54; }
+  .team-cell.work{ background:#D9F2D8; color:#1F5C2F; }
+  .team-cell.off{ background:#D9E8F6; color:#1E3A57; }
   .team-cell.vacation{ background: var(--state-vacation); color:#2B1B05; }
-  .team-cell.sold{ background: var(--state-sold); color:#ffffff; }
-  .team-cell.embark{ background: var(--state-embark); color:#ffffff; }
-  .team-cell.disembark{ background: var(--state-disembark); color:#ffffff; }
-  .team-calendar-grid.annual .team-cell.work{ color: var(--state-work); }
-  .team-calendar-grid.annual .team-cell.off{ color: #9FB1C9; }
+  .team-cell.sold{ background:#D9E8F6; color:#1E3A57; }
+  .team-cell.embark{ background:#D9F2D8; color:#1F5C2F; }
+  .team-cell.disembark{ background:#D9E8F6; color:#1E3A57; }
+  .team-calendar-grid.annual .team-cell.work{ color:#8CCF8A; }
+  .team-calendar-grid.annual .team-cell.off{ color:#9CB6D1; }
   .team-calendar-grid.annual .team-cell.vacation{ color: var(--state-vacation); }
-  .team-calendar-grid.annual .team-cell.sold{ color: var(--state-sold); }
-  .team-calendar-grid.annual .team-cell.embark{ color: var(--state-embark); }
-  .team-calendar-grid.annual .team-cell.disembark{ color: var(--state-disembark); }
-  .team-cell.today{ outline: 2px solid var(--state-embark); outline-offset: -2px; }
+  .team-calendar-grid.annual .team-cell.sold,
+  .team-calendar-grid.annual .team-cell.disembark{ color:#9CB6D1; }
+  .team-calendar-grid.annual .team-cell.embark{ color:#8CCF8A; }
+  .team-cell.today{ outline: 2px solid #8CCF8A; outline-offset: -2px; }
   .team-legend{
     margin-top: 12px;
     margin-bottom: 0;
@@ -1849,11 +1849,9 @@
       </div>
 
       <div class="legend team-legend">
-        <div class="legend-item"><span class="swatch work"></span>Embarcado</div>
         <div class="legend-item"><span class="swatch off"></span>Folga</div>
         <div class="legend-item"><span class="swatch ferias"></span>Férias</div>
-        <div class="legend-item"><span class="swatch embark"></span>Embarque</div>
-        <div class="legend-item"><span class="swatch disembark"></span>Desembarque</div>
+        <div class="legend-item"><span class="swatch work"></span>Embarcado</div>
       </div>
     </div>
 
@@ -1973,7 +1971,7 @@
   </section>
 
   <footer>
-    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.14</span></span>
+    <span class="creator-credit">CRIADO POR ISRAEL LOMEUS<span class="version-credit">VERSÃO: V3.15</span></span>
   </footer>
 </div>
 
@@ -1984,7 +1982,7 @@
   const appPageKey = 'escalaFeriasActivePageV1';
   const teamStorageKey = 'escalaFeriasTeamPlanningV2';
   const vesselStorageKey = 'escalaFeriasVesselNameV1';
-  const appVersion = 'V3.14';
+  const appVersion = 'V3.15';
   const exportCredit = `I.LOMEUS - ${appVersion}`;
   const teamRoles = [
     'Operador de Survey Trainee',
@@ -3638,21 +3636,21 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
       text: '#172033',
       dim: '#64748B',
       header: style.getPropertyValue('--bg-panel-2').trim() || '#28216C',
-      work: style.getPropertyValue('--state-work').trim() || '#2F855A',
-      off: style.getPropertyValue('--state-off').trim() || '#D7E3F2',
+      work: '#D9F2D8',
+      off: '#D9E8F6',
       vacation: style.getPropertyValue('--state-vacation').trim() || '#F0A62F',
-      sold: style.getPropertyValue('--state-sold').trim() || '#8B5CF6',
-      embark: style.getPropertyValue('--state-embark').trim() || '#2563EB',
-      disembark: style.getPropertyValue('--state-disembark').trim() || '#D95745',
+      sold: '#D9E8F6',
+      embark: '#D9F2D8',
+      disembark: '#D9E8F6',
       weekend: '#F1F5F9'
     };
     const stateMap = {
-      work: {color: colors.work, text: 'ON'},
-      off: {color: colors.off, text: 'OFF'},
-      vacation: {color: colors.vacation, text: 'FER'},
-      sold: {color: colors.off, text: 'OFF'},
-      embark: {color: colors.embark, text: 'EMB'},
-      disembark: {color: colors.disembark, text: 'DES'}
+      work: {color: colors.work, fg: '#1F5C2F', text: 'ON'},
+      off: {color: colors.off, fg: '#1E3A57', text: 'OFF'},
+      vacation: {color: colors.vacation, fg: '#2B1B05', text: 'FER'},
+      sold: {color: colors.off, fg: '#1E3A57', text: 'OFF'},
+      embark: {color: colors.embark, fg: '#1F5C2F', text: 'EMB'},
+      disembark: {color: colors.disembark, fg: '#1E3A57', text: 'DES'}
     };
     const exportStart = document.getElementById('exportStartMonth')?.value || `${analysis.year}-01`;
     const exportEnd = document.getElementById('exportEndMonth')?.value || `${analysis.year}-12`;
@@ -3713,11 +3711,9 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
       ['Formato', monthList.length === 1 ? 'Mensal' : 'Intervalo']
     ]);
     drawExportLegend(ctx, [
-      {label:'Embarcado', color:colors.work},
       {label:'Folga', color:colors.off},
       {label:'Férias', color:colors.vacation},
-      {label:'Embarque', color:colors.embark},
-      {label:'Desembarque', color:colors.disembark}
+      {label:'Embarcado', color:colors.work}
     ], margin + 650, 205);
 
     let y = headerH;
@@ -3807,7 +3803,7 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
           ctx.fillRect(x, rowY, cellW, rowH);
           fillCanvasRound(ctx, x + 5, rowY + 5, cellW - 10, rowH - 10, 4, meta.color, null);
           if(rowH >= 26 && ['vacation','embark','disembark'].includes(state.cls)){
-            ctx.fillStyle = state.cls === 'vacation' ? '#2B1B05' : '#FFFFFF';
+            ctx.fillStyle = meta.fg;
             ctx.font = '800 8px Consolas, monospace';
             ctx.textAlign = 'center';
             ctx.fillText(meta.text, x + cellW / 2, rowY + 17);
@@ -3917,11 +3913,9 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
               </div>
             </header>
             <div class="legend-row">
-              <span><b class="dot work"></b>Embarcado</span>
               <span><b class="dot off"></b>Folga</span>
               <span><b class="dot vacation"></b>Férias</span>
-              <span><b class="dot embark"></b>Embarque</span>
-              <span><b class="dot disembark"></b>Desembarque</span>
+              <span><b class="dot work"></b>Embarcado</span>
             </div>
             ${alertHTML}
             <table>
@@ -3958,11 +3952,9 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
           .print-meta{ margin-left:auto; text-align:right; font:9pt Consolas, monospace; color:#475569; line-height:1.45; }
           .legend-row{ display:flex; flex-wrap:wrap; gap:5mm; font-size:8pt; color:#475569; font-weight:700; }
           .dot{ display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:4px; vertical-align:middle; }
-          .dot.work,.state.work{ background:#2f855a; color:#fff; }
-          .dot.off,.state.off{ background:#d7e3f2; color:#263a54; }
+          .dot.work,.dot.embark,.state.work,.state.embark{ background:#d9f2d8; color:#1f5c2f; }
+          .dot.off,.dot.disembark,.state.off,.state.disembark{ background:#d9e8f6; color:#1e3a57; }
           .dot.vacation,.state.vacation{ background:#f0a62f; color:#2b1b05; }
-          .dot.embark,.state.embark{ background:#2563eb; color:#fff; }
-          .dot.disembark,.state.disembark{ background:#d95745; color:#fff; }
           .alerts{ border:1px solid #f0a62f; background:#fff8e8; padding:2mm 3mm; font-size:8pt; color:#6d4b12; }
           .alerts.ok{ border-color:#cbd5e1; background:#f8fafc; color:#64748b; }
           .alerts p{ margin:0; }
@@ -4054,11 +4046,9 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
               <div><small>Formato</small><strong>A4 paisagem</strong></div>
             </div>
             <div class="visual-legend">
-              <span><b class="sw work"></b>Embarcado</span>
               <span><b class="sw off"></b>Folga</span>
               <span><b class="sw vacation"></b>Férias</span>
-              <span><b class="sw embark"></b>Embarque</span>
-              <span><b class="sw disembark"></b>Desembarque</span>
+              <span><b class="sw work"></b>Embarcado</span>
             </div>
             <section class="month-box">
               <div class="month-box-head">
@@ -4102,11 +4092,9 @@ Data prevista de embarque: ${fmtDate(opt.embarque)}${scaleWarning ? `\nAlerta: $
           .summary-strip strong{ display:block; margin-top:1mm; font:800 11pt Segoe UI, Arial; color:#172033; }
           .visual-legend{ display:flex; gap:6mm; align-items:center; font-size:8pt; color:#475569; font-weight:800; }
           .sw{ display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:4px; }
-          .sw.work,.cell.work span{ background:#2f855a; color:#fff; }
-          .sw.off,.cell.off span{ background:#d7e3f2; color:#263a54; }
+          .sw.work,.sw.embark,.cell.work span,.cell.embark span{ background:#d9f2d8; color:#1f5c2f; }
+          .sw.off,.sw.disembark,.cell.off span,.cell.disembark span{ background:#d9e8f6; color:#1e3a57; }
           .sw.vacation,.cell.vacation span{ background:#f0a62f; color:#2b1b05; }
-          .sw.embark,.cell.embark span{ background:#2563eb; color:#fff; }
-          .sw.disembark,.cell.disembark span{ background:#d95745; color:#fff; }
           .month-box{ flex:1; background:#fff; border:1px solid #cbd5e1; border-radius:4mm; overflow:hidden; display:flex; flex-direction:column; }
           .month-box-head{ min-height:13mm; padding:3mm 5mm; background:#eef2f7; display:flex; justify-content:space-between; align-items:center; gap:5mm; }
           .month-box-head h2{ margin:0; color:#172033; font-size:14pt; }
